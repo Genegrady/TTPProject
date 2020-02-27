@@ -1,8 +1,12 @@
 const BASE_URL = 'http://localhost:3000';
 const USERS_URL = BASE_URL + '/users';
-const PERSIST_URL = BASE_URL + '/persist';
+const PERSIST_URL = BASE_URL + '/auth';
 const LOGIN_URL = BASE_URL + '/login';
 const SPECIFIC_USER_URL = id => USERS_URL + '/' + id;
+const IEX_CLOUD_API_BASE_URL = `https://cloud.iexapis.com/table/stock/`
+const API_KEY = process.env.REACT_APP_API_KEY
+const IEX_CLOUD_FETCH_URL = ticker => IEX_CLOUD_API_BASE_URL + ticker + '/quote?token=' + API_KEY
+
 
 // Redux Actions
 
@@ -54,6 +58,7 @@ const loginUserToDB = userCredentials => dispatch => {
   fetch(LOGIN_URL, config)
     .then(r => r.json())
     .then(data => {
+      console.log(data)
       dispatch(setUserAction(data.user));
       localStorage.setItem('token', data.token);
     });

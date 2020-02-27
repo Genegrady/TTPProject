@@ -1,11 +1,24 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { Fragment, useState, useEffect } from 'react';
 
-const Home = () => {
+const Home = (props) => {
   const email = useSelector(state => state.email);
-  const text = email ? (
-    <h1>{email} is currently logged in</h1>
-  ) : (
+  const user = useSelector(state => state.user);
+  // const user = useSelector(state => state.login.user);
+//   const [userState, setUserState] =useState({user: user})
+//   useEffect(() => {
+//     setUserState(user)
+// }, [user])
+
+  console.log(user)
+  const text = user ? (
+    <div>
+      
+    <h1>{user.name} is currently logged in</h1>
+    <h2>Balance is: ${parseFloat(user.balance).toFixed(2)}</h2>
+    </div>
+   ) : (
     <h1>Nobody is logged in</h1>
   );
   return <div>{text}</div>;

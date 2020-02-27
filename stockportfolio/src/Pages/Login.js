@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import userActions from '../redux/actions';
+import { Link } from 'react-router-dom';
 
 const LoginPage = props => {
   // initializing dispatch
@@ -15,6 +16,7 @@ const LoginPage = props => {
   const handleSubmit = e => {
     e.preventDefault();
     dispatch(userActions.loginUserToDB(loginForm));
+    // debugger
     props.history.push('/');
   };
 
@@ -43,7 +45,9 @@ const LoginPage = props => {
         placeholder="Password"
       />
       <input type="submit" />
+      <Link to="/signup" className="btn btn-link">Signup</Link>
     </form>
+    
   );
 };
 

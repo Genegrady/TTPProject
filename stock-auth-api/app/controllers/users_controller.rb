@@ -1,4 +1,8 @@
 class UsersController < ApplicationController
+    def new
+        @user = User.new
+    end 
+    
     def show
         user = User.find(params[:id])
         render json: user
@@ -9,7 +13,7 @@ class UsersController < ApplicationController
         if user.valid?
             user = user
             token = JWT.encode({user_id: user.id}, secret, 'HS256')
-            render json: {user: user, token: token}
+            render json: {user: user, include:[:transactions], token: token}
         else
             render json: {errors: user.errors.full_messages}
         end
@@ -29,6 +33,6 @@ class UsersController < ApplicationController
     private
 
     def user_params
-        params.permit(:email, :password)
+        params.permit(:name, :email, :password)
     end
 end
