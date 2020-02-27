@@ -1,6 +1,7 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
 import { Fragment, useState, useEffect } from 'react';
+import PurchaseStocks from '../Components/PurchaseStocks'
 
 const Home = (props) => {
   const email = useSelector(state => state.email);
@@ -17,6 +18,7 @@ const Home = (props) => {
       
     <h1>{user.name} is currently logged in</h1>
     <h2>Balance is: ${parseFloat(user.balance).toFixed(2)}</h2>
+    <PurchaseStocks/>
     </div>
    ) : (
     <h1>Nobody is logged in</h1>
