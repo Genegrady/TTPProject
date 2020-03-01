@@ -1,9 +1,12 @@
 import React, { useEffect } from 'react';
+import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
 import Nav from './Components/Nav';
 import {useDispatch} from 'react-redux';
 import userActions from './redux/actions'
+import history from './history';
+
 
 const App = (props) => {
 
@@ -14,11 +17,11 @@ useEffect(() => {
     dispatch(userActions.persistUser())
   }
 }, [dispatch])
-console.log(userActions.persistUser())
+console.log(history)
   return (
     <Router>
       <Nav />
-      <Routes  {...props}/>
+      <Routes  history ={history} {...props}/>
     </Router>
   );
 };

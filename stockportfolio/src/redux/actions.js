@@ -1,10 +1,11 @@
 const BASE_URL = 'http://localhost:3000';
-const USERS_URL = BASE_URL + '/users';
+export const USERS_URL = BASE_URL + '/users/';
 const PERSIST_URL = BASE_URL + '/auth';
 const LOGIN_URL = BASE_URL + '/login';
+export const TRANSACTION_URL = `/transactions`
 const SPECIFIC_USER_URL = id => USERS_URL + '/' + id;
 export const IEX_CLOUD_API_BASE_URL = `https://cloud.iexapis.com/stable/stock/`
-export const API_KEY = '/quote?token=' + process.env.REACT_APP_API_KEY
+export const API_KEY = '/quote?token=' + `pk_364ef2c1afb8442fb7c5235844fcb926`
 
 // console.log(IEX_CLOUD_FETCH_URL)
 

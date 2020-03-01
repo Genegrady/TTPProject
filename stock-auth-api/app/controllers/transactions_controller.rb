@@ -25,7 +25,7 @@ def index
 
  private
 
- def news_params
+ def transaction_params
     params.permit(
         :price, :quantity, :ticker, :user_id
     )
