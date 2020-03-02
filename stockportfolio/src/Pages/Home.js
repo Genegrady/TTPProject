@@ -9,6 +9,7 @@ import { connect } from 'react-redux';
 const Home = (props) => {
   // const email = useSelector(state => state.email);
   const user = useSelector(state => state.user);
+  // const portfolio = useSelector(state => Object.keys(state.portfolio));
   // const user = useSelector(state => state.login.user);
 //   const [userState, setUserState] =useState({user: user})
 //   useEffect(() => {
@@ -16,11 +17,13 @@ const Home = (props) => {
 // }, [user])
 
   console.log(user)
-  const text = user ? (
+
+  // Ternary to make sure user is logged in or else gives link to login or sign up page
+  const text = user && localStorage.token ? (
     <div>
       
     <h1>{user.name} is currently logged in</h1>
-    <h2>Balance is: ${parseFloat(user.balance).toFixed(2)}</h2>
+    <h2>Cash Balance is: ${parseFloat(user.balance).toFixed(2)}</h2>
     <PurchaseStocks {...user}/>
     <Portfolio {...user}/>
     </div>

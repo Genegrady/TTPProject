@@ -10,7 +10,7 @@ const Nav = () => {
   };
   return (
     <nav style={{ display: 'flex', justifyContent: 'space-evenly' }}>
-      <Link to="/">Home</Link>
+      <Link to="/">Portfolio</Link>
       {/* <Link to="/signup">Signup</Link> */}
       <Link to="/login">Login</Link>
       <Link to="/transactions">Transactions</Link>

@@ -3,20 +3,27 @@ import axios from 'axios'
 import {useSelector, useDispatch} from 'react-redux'
 import { useState, useEffect } from 'react'
 import {IEX_CLOUD_API_BASE_URL, API_KEY, USERS_URL, TRANSACTION_URL } from '../redux/actions'
+import userActions from '../redux/actions';
+import { connect } from 'react-redux';
 
 export const PurchaseStocks = (props) => {
-
+    const dispatch = useDispatch()
     //Set states for transactions and user
     const [stockForm, setStockForm] = useState({
         ticker: '',
         quantity: 0,
         price: 0
     })
+    // const [newPortfolio, setNewPortfolio] = useState({
+    //     portfolio: {ticker: '',
+    //     quantity: 0}
+    // })
     const [userState, setUserState] = useState(props)
     useEffect(() => {
         setUserState(props.user)
     },[props]
     )
+   
     const [transactionRender, setTransactionRender] = useState({
         transactions: []
     })
@@ -67,7 +74,16 @@ export const PurchaseStocks = (props) => {
             // debugger
             let userResults = await axios.patch(
                 userUrl, userParams
-            );setUserState(userResults.data)
+            );setUserState(userResults.data);
+            dispatch({
+                type: "ADD_TO_PORTFOLIO",
+                payload: {
+                    ticker: userResults.data.ticker,
+                    quantity: userResults.data.quantity
+                }
+            }
+            )
+            console.log(userResults)
             // debugger
         }else{
             alert('Balance too low')
@@ -96,7 +112,7 @@ const handleQuantityChange = e =>
 
 console.log("ticker", ticker)
 console.log("quantity", quantity)
-console.log(props.id)
+// console.log(newPortfolio)
 
     return (
     <div>
@@ -149,4 +165,7 @@ onSubmit={handleTransactionSubmit}
     )
 }
 
-export default PurchaseStocks
+const mapStateToProps = state => {
+  return { portfolio: state.newPortfolio };
+};
+export default connect(mapStateToProps)(PurchaseStocks);

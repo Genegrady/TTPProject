@@ -9,16 +9,4 @@ class User < ApplicationRecord
        (self.email = self.email.to_s.downcase) 
     }
     validates :email, uniqueness: true, presence: true
-
-    def stocks
-        stock_hash = {}
-        self.transactions.map { |s| 
-            if stock_hash[s.ticker]
-                stock_hash[s.ticker] += s.quantity
-            else
-                stock_hash[s.ticker] = s.quantity
-            end 
-        }
-        return stock_hash
-    end
 end
