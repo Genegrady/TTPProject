@@ -3,32 +3,59 @@ import { useSelector } from 'react-redux';
 import { Fragment, useState, useEffect } from 'react';
 import PurchaseStocks from '../Components/PurchaseStocks'
 import Portfolio from '../Pages/Portfolio'
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
 
 
 const Home = (props) => {
-  // const email = useSelector(state => state.email);
+  
+  //Grab the state of the user from redux
   const user = useSelector(state => state.user);
-  // const portfolio = useSelector(state => Object.keys(state.portfolio));
-  // const user = useSelector(state => state.login.user);
-//   const [userState, setUserState] =useState({user: user})
-//   useEffect(() => {
-//     setUserState(user)
-// }, [user])
 
   console.log(user)
 
+  //Styled Components
+  const StyledHOne = styled.h1`
+  
+	text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 18px;
+	font-weight: 100;
+	padding: 20px;
+	
+  text-align: center;
+  `
+  const StyledHTwo = styled.h2`
+  text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 18px;
+	font-weight: 100;
+  text-align: center;
+  
+  `
+
   // Ternary to make sure user is logged in or else gives link to login or sign up page
   const text = user && localStorage.token ? (
+    
     <div>
       
-    <h1>{user.name} is currently logged in</h1>
-    <h2>Cash Balance is: ${parseFloat(user.balance).toFixed(2)}</h2>
-    <PurchaseStocks {...user}/>
-    <Portfolio {...user}/>
+        <div>
+      <StyledHOne>Welcome back {user.name}!</StyledHOne>
+      <StyledHTwo>Cash Balance is: ${parseFloat(user.balance).toFixed(2)}</StyledHTwo>
+        <PurchaseStocks {...user}/>
+        </div>
+        <div>
+        <Portfolio {...user}/>
+        </div>
     </div>
+    
+    
+    
    ) : (
-    <h1>Nobody is logged in</h1>
+  <h1>Welcome to Stonkify! Please<Link to="/signup" className="btn btn-link">Signup</Link> or <Link to="/login" className="btn btn-link">Login</Link> if you have an account </h1>
   );
   return <div>{text}</div>;
 };

@@ -5,6 +5,8 @@ import { useState, useEffect } from 'react'
 import {IEX_CLOUD_API_BASE_URL, API_KEY, USERS_URL, TRANSACTION_URL } from '../redux/actions'
 import userActions from '../redux/actions';
 import { connect } from 'react-redux';
+import styled from 'styled-components';
+
 
 export const PurchaseStocks = (props) => {
     const dispatch = useDispatch()
@@ -67,7 +69,7 @@ export const PurchaseStocks = (props) => {
         let userParams ={
             balance: balance - price
         }
-        if(price < balance){
+        if(price < balance && quantity != 0){
             let results = await axios.post(
                 url, params
             );setTransactionRender(results.data)
@@ -75,18 +77,11 @@ export const PurchaseStocks = (props) => {
             let userResults = await axios.patch(
                 userUrl, userParams
             );setUserState(userResults.data);
-            dispatch({
-                type: "ADD_TO_PORTFOLIO",
-                payload: {
-                    ticker: userResults.data.ticker,
-                    quantity: userResults.data.quantity
-                }
-            }
-            )
             console.log(userResults)
             // debugger
-        }else{
-            alert('Balance too low')
+        }
+        else{
+            alert('Please Fix Errors')
         }
         
     }
@@ -114,52 +109,101 @@ console.log("ticker", ticker)
 console.log("quantity", quantity)
 // console.log(newPortfolio)
 
+// Styled Components for Purchasing stocks
+
+const StyledForm = styled.form`
+font-family: 'Open Sans Condensed', arial, sans;
+	width: 500px;
+	padding: 30px;
+	background: #FFFFFF;
+	margin: 50px auto;
+	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22);
+`
+const StyledInput = styled.input`
+  box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 10px;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 45px;
+  `
+  const StyledSubmit = styled(StyledInput)`
+  	background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
+	  background-color:#1DB954;
+  `
+  const StyledHThree = styled.h3`
+    display: box;
+    width: 500px;
+    margin: 50px auto;
+	text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 18px;
+	font-weight: 100;
+	padding: 20px;
+  text-align: center;
+  ox-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-moz-box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
+	-webkit-box-shadow:  0px 0px 15px rgba(0, 0, 0, 0.22)
+  `
+
     return (
     <div>
-     <form onSubmit={handleClick}>
-        <input
+    <StyledHThree>Find A Stock Quote</StyledHThree>
+     <StyledForm onSubmit={handleClick}>
+        <StyledInput
           type="text"
           name="ticker"
           value={ticker}
           onChange={handleTickerChange}
           placeholder="Ticker"
         />
-        <input
+        <StyledInput
           type="number"
           name="quantity"
           value={quantity}
           onChange={handleQuantityChange}
           placeholder="Quantity"
         />
-        <input type="submit" value='Get Quote'/>
-      </form>
-<form 
-onSubmit={handleTransactionSubmit}
->
-        <input
+        <StyledSubmit type="submit" value='Get Quote'/>
+      </StyledForm>
+      <StyledHThree>Purchase a Stock</StyledHThree>
+        <StyledForm 
+        onSubmit={handleTransactionSubmit}
+        >
+        <StyledInput
           type="text"
           name="ticker"
           value={ticker}
           onChange={handleTickerChange}
           placeholder="Ticker"
         />
-        <input
+        <StyledInput
           type="number"
           name="quantity"
           value={quantity}
           onChange={handleQuantityChange}
           placeholder="Quantity"
         />
-        <input
+        <StyledInput
           type="number"
           name="price"
           value={price}
           onChange={handleQuantityChange}
           placeholder="Price"
         />
-        <input type="submit" value='Purchase Stocks'/>
-        <input type="button" value="Cancel"onClick={handleCancel}/>
-      </form>
+        <StyledSubmit type="submit" value='Purchase Stocks'/>
+        <StyledSubmit type="button" value="Cancel"onClick={handleCancel}/>
+      </StyledForm>
     </div>
       
     )

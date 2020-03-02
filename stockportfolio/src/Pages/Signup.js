@@ -67,8 +67,8 @@ const Signup = props => {
 	height: 45px;
   `
   const StyledSubmit = styled(StyledInput)`
-  	background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-	  background-color:#34CACA;
+  	background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
+	  background-color:#1DB954;
   `
 
   // Component code

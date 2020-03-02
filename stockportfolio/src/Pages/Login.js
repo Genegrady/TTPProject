@@ -33,7 +33,7 @@ const LoginPage = props => {
   const StyledForm = styled.form`
   font-family: 'Open Sans Condensed', arial, sans;
 	width: 500px;
-	padding: 30px;
+	padding: 60px;
 	background: #FFFFFF;
 	margin: 50px auto;
 	box-shadow: 0px 0px 15px rgba(0, 0, 0, 0.22);
@@ -67,8 +67,26 @@ const LoginPage = props => {
 	height: 45px;
   `
   const StyledSubmit = styled(StyledInput)`
-  	background:linear-gradient(to bottom, #34CACA 5%, #30C9C9 100%);
-	  background-color:#34CACA;
+  	background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
+	  background-color:#1DB954;
+  `
+  const StyledLink = styled(Link)`
+  box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	-moz-box-sizing: border-box;
+	outline: none;
+	display: block;
+	width: 100%;
+	padding: 7px;
+	border: none;
+	border-bottom: 1px solid #ddd;
+	background: transparent;
+	margin-bottom: 10px;
+	font: 16px Arial, Helvetica, sans-serif;
+	height: 45px;
+  text-align: center;
+  background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
+	background-color:#1DB954;
   `
 
   // Component code
@@ -90,7 +108,8 @@ const LoginPage = props => {
         placeholder="Password"
       />
       <StyledSubmit type="submit" />
-      <Link to="/signup" className="btn btn-link">Signup</Link>
+      <h3>Don't Have an Account?</h3>
+      <StyledLink to="/signup" className="btn btn-link">Signup</StyledLink>
     </StyledForm>
     
   );
