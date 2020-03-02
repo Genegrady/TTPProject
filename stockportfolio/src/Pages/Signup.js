@@ -3,32 +3,7 @@ import { useDispatch } from 'react-redux';
 import userActions from '../redux/actions.js';
 import styled from 'styled-components';
 
-const Signup = props => {
-  // initializing dispatch
-  const dispatch = useDispatch();
-
-  // Setting up local state using the useState hook
-  const [signupForm, setSignupForm] = useState({
-    name: '',
-    email: '',
-    password: ''
-  });
-
-  // Controlled form functions
-  const handleChange = e =>
-    setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
-
-  const handleSubmit = e => {
-    e.preventDefault();
-    const { history } = props;
-    dispatch(userActions.newUserToDB(signupForm));
-    history.push('/');
-  };
-
-  // Destructuring keys from our local state to use in the form
-  const { name, email, password } = signupForm;
-
-  // Creating our styled components  for our form
+// Creating our styled components  for our form
 
   const StyledForm = styled.form`
   font-family: 'Open Sans Condensed', arial, sans;
@@ -63,13 +38,41 @@ const Signup = props => {
 	border-bottom: 1px solid #ddd;
 	background: transparent;
 	margin-bottom: 10px;
-	font: 16px Arial, Helvetica, sans-serif;
+	// font: 16px Arial, Helvetica, sans-serif;
 	height: 45px;
   `
   const StyledSubmit = styled(StyledInput)`
   	background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
 	  background-color:#1DB954;
   `
+
+const Signup = props => {
+  // initializing dispatch
+  const dispatch = useDispatch();
+
+  // Setting up local state using the useState hook
+  const [signupForm, setSignupForm] = useState({
+    name: '',
+    email: '',
+    password: ''
+  });
+
+  // Controlled form functions
+  const handleChange = e =>
+    setSignupForm({ ...signupForm, [e.target.name]: e.target.value });
+
+  const handleSubmit = e => {
+    e.preventDefault();
+    const { history } = props;
+    dispatch(userActions.newUserToDB(signupForm));
+    history.push('/');
+  };
+
+  // Destructuring keys from our local state to use in the form
+  const { name, email, password } = signupForm;
+
+  console.log(name)
+  
 
   // Component code
   return (

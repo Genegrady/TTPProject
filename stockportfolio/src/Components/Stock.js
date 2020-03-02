@@ -4,6 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import userActions from '../redux/actions';
 import {IEX_CLOUD_API_BASE_URL, API_KEY, USERS_URL, TRANSACTION_URL } from '../redux/actions'
 import axios from 'axios'
+import styled from 'styled-components';
 
 export const Stock = (props) => {
     // const dispatch = useDispatch()
@@ -25,7 +26,7 @@ const [stock, setStock] = useState({
     );setStock({
         ...stock,
         latestPrice: results.data.latestPrice || 0, 
-        open: results.data.open || results.data.latestPrice
+        open: stock.latestPrice || results.data.open
     })
   }
 
@@ -45,13 +46,23 @@ const [stock, setStock] = useState({
   }
 
     const shares = (quantity) => {
-     return props.quantity === 1 ? "Share" : "Shares"
+     return props.quantity <= 1 ? "Share" : "Shares"
     }
-
+    //Styled COmponent for Text Color
+    
+    const StyledText = styled.div`
+        color: ${stockColor()};
+        text-transform: uppercase;
+	    font-family: 'Open Sans Condensed', sans-serif;
+	    font-size: 18px;
+	    font-weight: 100;
+	    padding: 20px;
+        text-align: center;
+    `
     return (
-        <div classname={stockColor()}>
+        <StyledText>
             {ticker}--{quantity} {shares(quantity)} –– ${parseFloat(latestPrice * quantity).toFixed(2)}
-        </div>
+        </StyledText>
     )
 }
 export default Stock

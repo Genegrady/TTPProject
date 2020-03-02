@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import './App.css';
 import { BrowserRouter as Router } from 'react-router-dom';
 import Routes from './Routes';
-import Nav from './Components/Nav';
+import { Nav, NavLog} from './Components/Nav';
 import {useDispatch} from 'react-redux';
 import userActions from './redux/actions'
 import history from './history';
@@ -20,7 +20,12 @@ useEffect(() => {
 console.log(history)
   return (
     <Router>
-      <Nav />
+      
+      {
+      localStorage.token ? <NavLog/>:
+      
+      <Nav/>
+      }
       <Routes  history ={history} {...props}/>
     </Router>
   );

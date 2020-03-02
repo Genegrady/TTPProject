@@ -11,53 +11,77 @@ import styled from 'styled-components';
 const Home = (props) => {
   
   //Grab the state of the user from redux
-  const user = useSelector(state => state.user);
+  const user = props.user;
+  const[state, setState] = useState({
+    
+  })
 
-  console.log(user)
+//   const portfolioBalance = props.transactions.reduce(function(accumulator, currentValue,currentIndex, array){
+//     console.log(currentValue.price, accumulator)
+//     return accumulator + Math.trunc(currentValue.price)
+// }, 0)
+
+  console.log(state)
 
   //Styled Components
+  
+  
+  const StyledBoxContainer = styled.div`
+      display:table;
+    `
+  const StyledBoxRow = styled.div`
+    display:table-row;
+  `
+  const StyledBoxCell = styled.div`
+    display:table-cell; 
+    width:50%; 
+    padding:10px;
+  `
+  const StyledBoxCellOne = styled.div`
+    display:table-cell; 
+    width:50%; 
+    padding-top:50px;
+    padding:100px;
+  `
   const StyledHOne = styled.h1`
   
 	text-transform: uppercase;
 	font-family: 'Open Sans Condensed', sans-serif;
 	color: #797979;
-	font-size: 18px;
+	font-size: 30px;
 	font-weight: 100;
 	padding: 20px;
 	
   text-align: center;
   `
-  const StyledHTwo = styled.h2`
-  text-transform: uppercase;
-	font-family: 'Open Sans Condensed', sans-serif;
-	color: #797979;
-	font-size: 18px;
-	font-weight: 100;
-  text-align: center;
-  
+  const WelcomeHOne = styled(StyledHOne)`
+    padding-top: 400px;
   `
+  
+  
+  
+  
 
   // Ternary to make sure user is logged in or else gives link to login or sign up page
-  const text = user && localStorage.token ? (
+  const homePage = user && localStorage.token ? (
     
-    <div>
-      
-        <div>
-      <StyledHOne>Welcome back {user.name}!</StyledHOne>
-      <StyledHTwo>Cash Balance is: ${parseFloat(user.balance).toFixed(2)}</StyledHTwo>
-        <PurchaseStocks {...user}/>
-        </div>
-        <div>
+    <StyledBoxRow>
+       <StyledBoxCellOne>
         <Portfolio {...user}/>
-        </div>
-    </div>
+        </StyledBoxCellOne>
+        <StyledBoxCell>
+      <StyledHOne>Welcome back {props.user.user.name}!</StyledHOne>
+        <PurchaseStocks {...user}/>
+        </StyledBoxCell>
+       
+    </StyledBoxRow>
     
     
     
    ) : (
-  <h1>Welcome to Stonkify! Please<Link to="/signup" className="btn btn-link">Signup</Link> or <Link to="/login" className="btn btn-link">Login</Link> if you have an account </h1>
+  <WelcomeHOne>Welcome to Stonkify! Please <Link to="/signup" >Signup</Link> or <Link to="/login" >Login</Link> if you have an account </WelcomeHOne>
   );
-  return <div>{text}</div>;
+  return <StyledBoxContainer>{homePage}</StyledBoxContainer>;
 };
 
 // export default Home;

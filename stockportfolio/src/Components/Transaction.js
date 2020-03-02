@@ -14,17 +14,19 @@ export const Transaction = (props) => {
   text-align: center;
 `
     const StyledP = styled.p`
-  padding-left: 10%;
-  padding-right: 10%;
+  text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 18px;
+	font-weight: 100;
+	padding: 20px;
+	
   text-align: center;
-  font: 16px Arial, Helvetica, sans-serif;
 
 `
     return (
         <StyledCard>
-            <StyledP>Stock: {ticker}</StyledP>
-            <StyledP>Price: ${price}</StyledP>
-            <StyledP>Quantity: {quantity}</StyledP>
+            <StyledP>Stock: {ticker} -- Price: ${price} --Quantity: {quantity}</StyledP>
         </StyledCard>
     )
 }

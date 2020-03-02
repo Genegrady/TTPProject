@@ -11,46 +11,46 @@ import uuid from 'uuid';
 
 export const Transactions = (props) => {
 
-const [allTransactions, setAllTransactions] = useState({
-    transactions: []
-})
+// const [allTransactions, setAllTransactions] = useState({
+//     transactions: []
+// })
 const userState = useSelector(state => state.user);
 const[user, setUser] = useState({
-    userState
+    user: userState
 })
 // useEffect(() => {
 //     setUserState(user)
 // },[user]
 // )
 
-const fetchTransactions = async () => {
-    let url = USERS_URL + `${props.id}` + TRANSACTION_URL
-    if(localStorage.token){
-        const result = await axios(
-            url
-        );setAllTransactions({
-            transactions: result.data
-        })
-    }
-}
-useEffect(() => {
-    fetchTransactions()
+// const fetchTransactions = async () => {
+//     let url = USERS_URL + `${props.id}` + TRANSACTION_URL
+//     if(localStorage.token){
+//         const result = await axios(
+//             url
+//         );setAllTransactions({
+//             transactions: result.data
+//         })
+//     }
+// }
+// useEffect(() => {
+//     fetchTransactions()
     
-},[props.id]
+// },[props.id]
 
-)
+// )
 // let id = uuid;
 const getTransactions = () => {
-    if(user){
+    if(userState){
 
     
-    return allTransactions.transactions.map((transaction, i) =>
+    return userState.transactions.map((transaction, i) =>
     <Transaction {...transaction} key ={i} user_id ={user.id}/>)
     }
 }
 
-console.log(allTransactions.transactions)
-console.log(user)
+// console.log(allTransactions.transactions)
+console.log(userState)
 // const {id, balance} = props.user
 
     return (

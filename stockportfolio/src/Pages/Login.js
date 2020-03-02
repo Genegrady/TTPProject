@@ -4,31 +4,7 @@ import userActions from '../redux/actions';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-
-const LoginPage = props => {
-  // initializing dispatch
-  const dispatch = useDispatch();
-  // Setting up local state using the useState hook
-  const [loginForm, setLoginForm] = useState({
-    email: '',
-    password: ''
-  });
-
-  // controlled form functions
-  const handleSubmit = e => {
-    e.preventDefault();
-    dispatch(userActions.loginUserToDB(loginForm));
-    // debugger
-    props.history.push('/');
-  };
-
-  const handleChange = e =>
-    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
-
-  // Destructuring keys from our local state to use in the form
-  const { email, password } = loginForm;
-
-  // Creating our styled components  for our form
+// Creating our styled components  for our form
 
   const StyledForm = styled.form`
   font-family: 'Open Sans Condensed', arial, sans;
@@ -88,6 +64,46 @@ const LoginPage = props => {
   background:linear-gradient(to bottom, #1DB954 5%, #30C9C9 100%);
 	background-color:#1DB954;
   `
+  const StyledHThree = styled.h3`
+
+	text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 18px;
+	font-weight: 100;
+  text-align: center;
+  `
+
+const LoginPage = props => {
+  // initializing dispatch
+  const dispatch = useDispatch();
+  // Setting up local state using the useState hook
+  const [loginForm, setLoginForm] = useState({
+    email: '',
+    password: ''
+  });
+
+  // controlled form functions
+  const handleSubmit =  async e => {
+    e.preventDefault();
+    
+    dispatch(userActions.loginUserToDB(loginForm));
+    // debugger
+    props.history.push('/');
+    alert("Login Successful")
+    window.location.reload()
+
+  
+    
+  };
+
+  const handleChange = e =>
+    setLoginForm({ ...loginForm, [e.target.name]: e.target.value });
+
+  // Destructuring keys from our local state to use in the form
+  const { email, password } = loginForm;
+
+  
 
   // Component code
   return (
@@ -108,7 +124,7 @@ const LoginPage = props => {
         placeholder="Password"
       />
       <StyledSubmit type="submit" />
-      <h3>Don't Have an Account?</h3>
+      <StyledHThree>Don't Have an Account?</StyledHThree>
       <StyledLink to="/signup" className="btn btn-link">Signup</StyledLink>
     </StyledForm>
     

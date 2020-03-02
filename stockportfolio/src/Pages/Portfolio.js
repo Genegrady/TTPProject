@@ -5,43 +5,45 @@ import {useSelector, useDispatch} from 'react-redux'
 import { useState, useEffect } from 'react'
 import {IEX_CLOUD_API_BASE_URL, API_KEY, USERS_URL, TRANSACTION_URL } from '../redux/actions'
 import axios from 'axios'
+import styled from 'styled-components';
 
 export const Portfolio = (props) => {
     // Set values for portfolio balance to be displayed and render our individual stocks to the DOM
-    
-    const balance = useSelector(state=> parseFloat(state.user.balance).toFixed(2))
-    const [allTransactions, setAllTransactions] = useState({
-    transactions: []
- })
-    const fetchTransactions = async () => {
-    let url = USERS_URL + `${props.id}` + TRANSACTION_URL
-    if(localStorage.token){
-        const result = await axios(
-            url
-        );setAllTransactions({
-            transactions: result.data
-        })
-    }
-}
-// Like component did mount, we are using this to continually gather new data from the rails backend
-useEffect(() => {
-    fetchTransactions()
-    
-},[props.id]
-
-)
-
-// Function to add the price of all stocks together to show portfolio balance
-
-let portfolioBalance = allTransactions.transactions.reduce(function(accumulator, currentValue,currentIndex, array){
+    let portfolioBalance = props.transactions.reduce(function(accumulator, currentValue,currentIndex, array){
     console.log(currentValue.price, accumulator)
     return accumulator + Math.trunc(currentValue.price)
 }, 0)
+    
+    const balance = useSelector(props=> props.user.balance - portfolioBalance)
+//     const [allTransactions, setAllTransactions] = useState({
+//     transactions: []
+//  })
+//     const fetchTransactions = async () => {
+//     let url = USERS_URL + `${props.id}` + TRANSACTION_URL
+//     if(localStorage.token){
+//         const result = await axios(
+//             url
+//         );setAllTransactions({
+//             transactions: result.data
+//         })
+//     }
+// }
+// Like component did mount, we are using this to continually gather new data from the rails backend
+// useEffect(() => {
+//     fetchTransactions()
+    
+// },[props.id]
+
+// )
+
+// Function to add the price of all stocks together to show portfolio balance
+
+
 
 //Function to reduce all individual transactions into singular objects that reflect the quantity of each stock owned
 
 let stocks = [];
-allTransactions.transactions.forEach(function (a) {
+props.transactions.forEach(function (a) {
     if (!this[a.ticker]) {
         this[a.ticker] = { ticker: a.ticker, quantity: 0 };
         stocks.push(this[a.ticker]);
@@ -53,7 +55,7 @@ allTransactions.transactions.forEach(function (a) {
 
 let renderStocks = () => {
     return stocks.map((stock,i) =>
-        <Stock {...stock} key={i}/>
+         <Stock {...stock} key={i}/>
     )
 }
 
@@ -65,12 +67,32 @@ let renderStocks = () => {
 
 
     // const portfolio = useSelector(state => Object.entries(state.portfolio))
-    console.log(portfolioBalance)
+    console.log(props.user.balance)
+    console.log(portfolioBalance + (parseInt(props.user.balance)-portfolioBalance))
     
+    //Styled Components
+    const StyledHOne = styled.h1`
+        text-transform: uppercase;
+	font-family: 'Open Sans Condensed', sans-serif;
+	color: #797979;
+	font-size: 30px;
+	font-weight: 100;
+	padding: 20px;
+	
+  text-align: center;
+    `
+    const StyledP = styled.p`
+   
+    `
+
+    
+
     return (
         <div>
-            <h1>Portfolio Balance: ${parseFloat(portfolioBalance).toFixed(2) + parseFloat(balance)}</h1>
-            {renderStocks()}
+            <StyledHOne>Portfolio Balance: ${(portfolioBalance + (parseInt(props.user.balance)-portfolioBalance)).toFixed(2)}</StyledHOne>
+
+            {props.transactions.length < 1 ? <StyledHOne> You Have No Shares. Please Purchase Shares</StyledHOne>:
+            renderStocks()}
         </div>
     )
 }
